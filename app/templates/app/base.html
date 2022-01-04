@@ -1,0 +1,62 @@
+{% load crispy_forms_tags %}
+
+    <body>
+        
+  {% if messages %}
+  {% for message in messages %}
+  <div class="alert alert-info">
+    <strong>{{message}}</strong>
+  </div>
+  {% endfor %}
+  {% endif %}
+
+  <center class="row">
+    <h1>__SIMPLE TODO APP__</h1>
+    <hr />
+  </center>
+
+  <div class="row">
+
+    <div class="col-md-8">
+
+      {% for i in list %}
+      <div class="card">
+        <center><b>{{i.title}}</b></center>
+        <hr/>
+        {{i.date}}
+        <hr/>
+        {{i.details}}
+        <br />
+        <br />
+        <form action="/del/{{i.id}}" method="POST" style=" padding-right: 4%; padding-bottom: 3%;">
+          {% csrf_token %}
+          
+          
+          <button value="remove" type="submit"  class="btn btn-primary" style="float: right;"><span class="glyphicon glyphicon-trash"></span> &nbsp; REMOVE</button>
+
+        </form>
+
+        <form action="/edit/{{i.id}}" method="POST"></form>
+        {% csrf_token %}
+        <button value="edit" type="submit"  class="btn btn-warning" style="float: left; position:inherit;"><span class="glyphicon glyphicon-edit"></span> &nbsp; EDIT</button>
+
+        </form>
+      </div>
+      {% endfor%}
+    </div>
+    <div class="col-md-1"> </div>
+    <div class="col-md-3" >
+      <div  class="submit_form">
+      <form  method="POST">
+        {% csrf_token %}
+        {{forms|crispy}}
+        <center>
+        <input type="submit" class="btn btn-default" value="submit" />
+      </center>
+      </form>
+    </div>
+  </div>
+</div>
+
+        
+    </body>
